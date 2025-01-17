@@ -1,0 +1,131 @@
+<form>
+    <div class="searchLinks" hidden>
+        {% for page in site.pages %}
+        {% if page.layout %}
+        <div class="s-i" search-index="{{ site.path }}{{ page.url }}" search-path="{{ page.url }}">
+            {{ page.title }}
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="searchBox form-group">
+        <input type="text" id="search-bar" name="q" aria-label="Search through site content"
+               onkeyup="searchQueryThenShowResults(this.value)" class="form-control">
+        <ul id="resultBox">
+        </ul>
+    </div>
+</form>
+<script async>
+    async function search(query) {
+        let searchElements = [];
+        for (let currentElement of document.getElementsByClassName("s-i")) {
+            let currentElementIndex = currentElement.getAttribute("search-index");
+            let currentElementPath = currentElement.getAttribute("search-path");
+            let fetske = await fetch(currentElementIndex);
+
+            let actualHtml = await fetske.text();
+
+            let find = $(actualHtml).find(":header");
+
+            let innerTexts = [];
+            for (const found of find) {
+                innerTexts.push({
+                    href: `${currentElementIndex}${found.id ? "#" + found.id : ""}`,
+                    path: `${currentElementPath}${found.id ? "#" + found.id : ""}`,
+                    innerText: found.innerText
+                });
+            }
+
+            let item = {
+                name: currentElementIndex,
+                queriables: innerTexts
+            };
+
+            searchElements.push(item)
+        }
+        let queriablesMap = searchElements.map(x => x.queriables);
+        let searchSkeletonMap = queriablesMap.map(innerArray => innerArray.filter(element => element.innerText.toLowerCase().includes(query.toLowerCase())));
+        let searchResult = searchSkeletonMap.filter(skeleton => skeleton.length > 0);
+        return searchResult;
+    }
+
+
+    async function searchQueryThenShowResults(query) {
+        if (query.length >= 2) {
+            let result = await search(query);
+            let rResult = result[0];
+            if (rResult) {
+                let elementById = document.getElementById("resultBox");
+                elementById.innerHTML = ""
+
+                function generateResults(resultElement) {
+                    console.log(elementById.getElementsByClassName(resultElement.innerText))
+                    if (elementById.getElementsByClassName(resultElement.innerText).length <= 0) {
+                        let container = document.createElement("li")
+                        container.setAttribute("class", resultElement.innerText)
+                        let linkContainer = document.createElement("a")
+                        linkContainer.href = resultElement.href
+                        let element = document.createElement("div")
+                        let path = document.createElement("p")
+                        element.innerText = resultElement.innerText
+                        path.innerText = resultElement.path
+                        element.append(path)
+                        linkContainer.append(element)
+                        container.append(linkContainer)
+                        container.onclick = () => {
+                            window.onscroll = () => {
+                                console.log("Disabled on scroll for a while")
+                            }
+                            document.getElementById("search-bar").value = ""
+                            container.parentElement.innerHTML = ""
+                        }
+                        elementById.append(container)
+                    }
+                }
+
+                for (let resultElement of rResult) {
+                    generateResults(resultElement)
+                }
+            }
+        } else {
+            let elementById = document.getElementById("resultBox");
+            elementById.innerHTML = ""
+        }
+    }
+</script>
+<style>
+    input#search-bar {
+        border-radius: 3rem;
+        height: 1.6rem;
+    }
+
+    .searchBox {
+        margin-top: 0.3rem;
+        background: whitesmoke;
+        border-radius: 1rem;
+    }
+
+    #resultBox > li:hover {
+        background-color: gray;
+    }
+
+    #resultBox > li p {
+        text-align: left !important;
+        font-size: 16px;
+    }
+
+    #resultBox > li {
+        background-color: gainsboro;
+        border-radius: 0.3rem;
+        text-align: left;
+        padding-left: 1rem;
+        margin: 0.3rem;
+    }
+
+    #resultBox {
+        overflow-y: auto;
+        list-style: none;
+        border-radius: 0 0 0.6rem 0.6rem;
+        padding: 0 !important;
+    }
+</style>

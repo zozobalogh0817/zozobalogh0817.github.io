@@ -13,7 +13,7 @@ url: 'http://watvr.me/home'
 # Site Settings (this can be reaced in code with site.settings.PROPERTY_PLACEHOLDER)
 settings: {
   # Basic section
-  home: "/home",
+  home: "/docs",
   redirectTimeOut: 10,
   private: false,
   # END #

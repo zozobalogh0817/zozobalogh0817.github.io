@@ -132,13 +132,12 @@
     // look method implementation for further information
     setUpAnchors()
 
-    window.onhashchange = onHashChange
     window.onload = () => {
-        if (window.location.hash) {
-            onHashChange();
+        window.onhashchange = () => {
             window.onscroll = () => {
                 console.log("Disabled on scroll for a while")
             }
+            onHashChange();
         }
         // Set onscroll event to onScroll method on default
         window.onscroll = onScroll;

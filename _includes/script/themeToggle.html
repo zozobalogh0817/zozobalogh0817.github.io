@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<div id="theme-toggle">
+    <i id="dark-theme-icon" class="bi bi-moon-stars" onclick="switchTheme()"></i>
+    <i id="light-theme-icon" class="bi bi-brightness-high-fill light" onclick="switchTheme()" hidden></i>
+</div>
+
+<style>
+    div#theme-toggle {
+        padding-left: 1.6rem;
+    }
+</style>
+
+<style id="dark-theme-style" class="disabled" media="max-width: 1px">
+    table tr {
+        background-color: white;
+    }
+
+    .light {
+        color: #ffffff
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        color: #F7FAFC !important
+    }
+
+    header.masthead {
+        background-color: #111111 !important;
+        border-bottom: 1px solid #303c4b !important;
+    }
+
+    .menuLinks a {
+        color: #303c4b !important
+    }
+
+    .menuLinks a:hover {
+        color: #cccccc !important
+    }
+
+    .menuLinks a.border-bottom {
+        color: #F7FAFC !important
+    }
+
+    .masthead-title > a {
+        color: #F7FAFC !important
+    }
+
+    .masthead-title > a:hover {
+        color: #cccccc !important
+    }
+
+    aside.sidenav.toc {
+        background-color: #111111 !important;
+        border-right: 1px solid #303c4b;
+    }
+
+    body {
+        background-color: #111111 !important;
+    }
+
+    p {
+        color: #F7FAFC;
+    }
+
+    pre {
+        background-color: #303c4b;
+    }
+
+    pre code {
+        color: #f7fafc;
+    }
+
+    li {
+        color: #f7fafc;
+    }
+
+    li > a {
+        color: #303c4b !important;
+    }
+
+    li > a:hover {
+        color: #cccccc !important
+    }
+
+    li > a.active_anchor {
+        color: #F7FAFC !important;
+    }
+
+    #search-bar {
+        background-color: #111111 !important;
+        border-color: #303c4b
+    }
+
+    .searchBox {
+        background-color: #111111
+    }
+
+    #resultBox > li {
+        background-color: #2D3748
+    }
+
+    #resultBox > li a {
+        color: #f7fafc !important
+    }
+</style>
+
+<script>
+    if (window.localStorage.getItem("dark-theme") === "active") {
+        switchTheme();
+    }
+
+    function switchTheme() {
+        let element = document.getElementById("dark-theme-style")
+        if (element.className === "disabled") {
+            document.getElementById("dark-theme-icon").hidden = true
+            document.getElementById("light-theme-icon").hidden = false
+            element.setAttribute("media", "")
+            element.setAttribute("class", "active")
+            window.localStorage.setItem("dark-theme", "active")
+        } else if (element.className === "active") {
+            document.getElementById("light-theme-icon").hidden = true
+            document.getElementById("dark-theme-icon").hidden = false
+            element.setAttribute("media", "max-width: 1px")
+            element.setAttribute("class", "disabled")
+            window.localStorage.setItem("dark-theme", "disabled")
+        }
+    }
+</script>

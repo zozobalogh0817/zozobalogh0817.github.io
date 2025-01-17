@@ -218,6 +218,15 @@ You can also use raw HTML in your Markdown, and it'll mostly work pretty well. H
   <dd>Does *not* work **very** well. Use HTML <em>tags</em>.</dd>
 </dl>
 
+## Tables
+### Markdown table
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |
+
+### HTML table
 <table>
   <tr>
     <th></th>
@@ -294,3 +303,6 @@ So this is a separate line in the *same paragraph*.
 https://user-images.githubusercontent.com/67690333/150386239-a769a799-ce7d-4739-ae04-c84de1cc2355.mp4
 
 
+## Youtube video
+
+[YOUTUBE(https://www.youtube.com/watch?v=opvCf5-LZZM)]

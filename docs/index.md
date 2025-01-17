@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Home
+title: Quick Start Guide
 options: { toc: true, menuItem: true, archived: false }
 ---
 
@@ -24,7 +24,7 @@ remote_theme: zozobalogh0817/wiki-theme # <- this is the master branch of this r
 url: 'https://YOUR_GITHUB_USERNAME.github.io/'
 path: 'https://YOUR_GITHUB_USERNAME.github.io/'
 settings: {
-  home: YOUR_HOME_URI # example : "/home" -> this indicates home.md
+  home: YOUR_HOME_URI # example : "/home" -> this indicates index.md
 }
 ```
 

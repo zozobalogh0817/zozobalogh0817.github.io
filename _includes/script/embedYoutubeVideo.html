@@ -1,0 +1,49 @@
+<script>
+    function getVideoIdFromYoutubeLink(url) {
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+        let match = url.match(regExp);
+
+        if (match && match[2].length === 11) {
+            return match[2];
+        } else {
+            return 'error';
+        }
+    }
+
+    let innerContainerPs = innerContainer.getElementsByTagName("p");
+    for (let p of innerContainerPs) {
+        let expressionGlobal = /\[YOUTUBE\((.*)\)]/g;
+        let expression = /\[YOUTUBE\((.*)\)]/;
+        let match = p.innerText.match(expressionGlobal)
+
+        if (match) {
+            p.innerText = "";
+            let mapper = match.map(dx => dx.match(expression))
+            p.setAttribute("class", "youtube-embed-video")
+            let iframe = document.createElement("iframe")
+            iframe.src = "https://www.youtube.com/embed/" + getVideoIdFromYoutubeLink(mapper[0][1])
+            iframe.allowFullscreen = true
+            p.append(iframe)
+        }
+    }
+    <!--\[YOUTUBE\((.*)\)\]-->
+</script>
+<style>
+    p.youtube-embed-video {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        padding-top: 56.25%; /* 16:9 Aspect Ratio (divide 9 by 16 = 0.5625) */
+    }
+
+    p.youtube-embed-video > iframe {
+        border-radius: 0.78rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>

@@ -1,0 +1,44 @@
+<script>
+    let innerContainer = document.getElementsByClassName("inner-container")[0];
+    // 0 Will be the link inside the p tag
+    // 1 Will be the link inside the p tag
+    // 2 will be the extension
+
+    let pS = innerContainer.getElementsByTagName("p");
+    for (let p of pS) {
+        let match = p.innerText.match(/(\S+)\.(mp4|MP4|mov|MOV)/g);
+        if (match) {
+            p.innerText = ""
+            let video = document.createElement("video")
+            let source = document.createElement("source")
+            video.controls = true
+            video.setAttribute("controlsList", "nodownload")
+            source.src = match[0]
+            video.append(source)
+            p.append(video)
+        }
+    }
+</script>
+<style>
+    video {
+        border-radius: 0.78rem;
+        width: 100%;
+    }
+
+    video::-webkit-media-controls-timeline {
+        background-color: var(--bs-warning);
+        padding: 0;
+        margin-bottom: 16px;
+        margin-right: 16px;
+        margin-left: 16px;
+        border-radius: 1rem;
+    }
+
+    video::-webkit-media-controls-volume-slider {
+        background-color: var(--bs-warning);
+        padding-top: 0;
+        margin-top: 22px;
+        padding-bottom: 0;
+        border-radius: 1rem;
+    }
+</style>

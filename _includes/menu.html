@@ -1,4 +1,6 @@
 <nav class="menuLinks">
+    {% include script/headerSearch.html %}
+
     {% for page in site.pages %}
     {% if page.options.menuItem %}
     <div class="menu-item">
@@ -6,6 +8,8 @@
     </div>
     {% endif %}
     {% endfor %}
+
+    {% include script/themeToggle.html %}
 </nav>
 
 <script>
